@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import PublicNavbar from '@/components/layout/PublicNavbar';
+import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
 import { authApi } from '@/lib/api/auth';
 
@@ -36,6 +38,8 @@ export default function LoginPage() {
   };
 
   return (
+    <>
+    <PublicNavbar />
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
         <div>
@@ -43,7 +47,7 @@ export default function LoginPage() {
             Connexion
           </h2>
           <p className="mt-2 text-center text-gray-600">
-            Ampunv - Ancien Meuble Pour Une Nouvelle Vie
+            AMPUNV - Ancien Meuble Pour Une Nouvelle Vie
           </p>
         </div>
 
@@ -102,5 +106,7 @@ export default function LoginPage() {
         </form>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }
