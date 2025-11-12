@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { userService } from '@/app/api/user.service';
-import { User } from '@/app/types';
+import { User } from '@/types';
 
 export default function UsersManagement() {
   const [users, setUsers] = useState<User[]>([]);

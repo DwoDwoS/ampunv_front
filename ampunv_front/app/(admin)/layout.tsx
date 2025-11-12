@@ -1,5 +1,5 @@
-import AdminNavbar from '@/app/components/AdminNavbar';
-import ProtectedRoute from '@/app/components/ProtectedRoute';
+import AdminNavbar from '@/components/AdminNavbar';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 export default function AdminLayout({
   children,

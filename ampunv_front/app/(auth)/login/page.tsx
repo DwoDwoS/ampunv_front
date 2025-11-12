@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { authService } from '@/app/api/auth.service';
+import { authApi } from '@/lib/api/auth';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,8 +20,8 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await authService.login(formData);
-      authService.saveAuth(response);
+      const response = await authApi.login(formData);
+      authApi.saveAuth(response);
       
       if (response.role === 'ADMIN') {
         router.push('/admin');
@@ -29,7 +29,7 @@ export default function LoginPage() {
         router.push('/dashboard');
       }
     } catch (err: any) {
-      setError(err.response?.data || 'Email ou mot de passe incorrect');
+      setError(err.response?.data?.message || err.response?.data || 'Email ou mot de passe incorrect');
     } finally {
       setLoading(false);
     }
@@ -89,7 +89,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
