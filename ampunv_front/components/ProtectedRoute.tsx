@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { authService } from '@/app/api/auth.service';
+import { authApi } from '@/lib/api/auth';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -16,12 +16,12 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
   useEffect(() => {
     const checkAuth = () => {
-      if (!authService.isAuthenticated()) {
+      if (!authApi.isAuthenticated()) {
         router.push('/login');
         return;
       }
 
-      if (requireAdmin && !authService.isAdmin()) {
+      if (requireAdmin && !authApi.isAdmin()) {
         router.push('/dashboard');
         return;
       }
