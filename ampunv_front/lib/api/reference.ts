@@ -3,13 +3,22 @@ import { City, ReferenceData, FurnitureType, Material, Color } from '@/types';
 
 export const referenceApi = {
   getAll: async (): Promise<ReferenceData> => {
-    const response = await apiClient.get<ReferenceData>('/api/reference-data/all');
-    return response.data;
+    const [furnitureTypesRes, materialsRes, colorsRes] = await Promise.all([
+      apiClient.get<FurnitureType[]>('/api/reference-data/furniture-types'),
+      apiClient.get<Material[]>('/api/reference-data/materials'),
+      apiClient.get<Color[]>('/api/reference-data/colors'),
+    ]);
+
+    return {
+      furnitureTypes: furnitureTypesRes.data || [],
+      materials: materialsRes.data || [],
+      colors: colorsRes.data || [],
+    };
   },
 
   getCities: async (): Promise<City[]> => {
     const response = await apiClient.get<City[]>('/api/cities');
-    return response.data;
+    return response.data || [];
   },
 
   getFurnitureTypes: async (): Promise<FurnitureType[]> => {
