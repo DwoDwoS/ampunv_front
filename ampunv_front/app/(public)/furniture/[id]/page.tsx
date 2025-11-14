@@ -124,13 +124,13 @@ export default function FurnitureDetailPage() {
                 <div>
                   <span className="font-semibold text-gray-700">État:</span>
                   <span className={`ml-2 px-2 py-1 rounded text-sm ${
-                    furniture.status === 'AVAILABLE' 
+                    furniture.status === 'APPROVED' 
                       ? 'bg-green-100 text-green-800' 
                       : furniture.status === 'SOLD'
                       ? 'bg-red-100 text-red-800'
                       : 'bg-yellow-100 text-yellow-800'
                   }`}>
-                    {furniture.status === 'AVAILABLE' ? 'Disponible' : 
+                    {furniture.status === 'APPROVED' ? 'Disponible' : 
                      furniture.status === 'SOLD' ? 'Vendu' : 'En attente'}
                   </span>
                 </div>
@@ -143,7 +143,7 @@ export default function FurnitureDetailPage() {
                 )}
               </div>
 
-              {furniture.status === 'AVAILABLE' && (
+              {furniture.status === 'APPROVED' && (
                 <button
                   onClick={handleBuyNow}
                   className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold"

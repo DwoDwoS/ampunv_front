@@ -15,7 +15,7 @@ export default function AdminFurnituresPage() {
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [furnitureToReject, setFurnitureToReject] = useState<Furniture | null>(null);
   const [filter, setFilter] = useState<
-    "ALL" | "PENDING" | "AVAILABLE" | "SOLD"
+    "ALL" | "PENDING" | "APPROVED" | "SOLD"
   >("PENDING");
 
   useEffect(() => {
@@ -26,10 +26,8 @@ export default function AdminFurnituresPage() {
     try {
       setLoading(true);
       const data = await furnitureApi.getAll();
-      console.log("Meubles chargés:", data.length);
       setFurnitures(data);
     } catch (error) {
-      console.error("Erreur lors du chargement des meubles:", error);
       alert("Impossible de charger les meubles");
     } finally {
       setLoading(false);
@@ -38,14 +36,13 @@ export default function AdminFurnituresPage() {
 
   const handleStatusChange = async (
     id: number,
-    newStatus: "AVAILABLE" | "PENDING" | "SOLD"
+    newStatus: "APPROVED" | "PENDING" | "SOLD"
   ) => {
     try {
       await furnitureApi.update(id, { status: newStatus });
       alert(`Statut mis à jour avec succès !`);
       await fetchFurnitures();
     } catch (error: any) {
-      console.error("Erreur lors de la mise à jour:", error);
       alert(
         error.response?.data?.message ||
           "Erreur lors de la mise à jour du statut"
@@ -63,7 +60,6 @@ export default function AdminFurnituresPage() {
       alert("Meuble supprimé avec succès !");
       await fetchFurnitures();
     } catch (error: any) {
-      console.error("Erreur lors de la suppression:", error);
       alert(error.response?.data?.message || "Erreur lors de la suppression");
     }
   };
@@ -80,7 +76,6 @@ export default function AdminFurnituresPage() {
       await fetchFurnitures();
       setIsModalOpen(false);
     } catch (error: any) {
-      console.error("Erreur lors de l'approbation:", error);
       alert(error.response?.data?.message || "Erreur lors de l'approbation");
     }
   };
@@ -104,7 +99,6 @@ export default function AdminFurnituresPage() {
       setIsModalOpen(false);
       setFurnitureToReject(null);
     } catch (error: any) {
-      console.error("Erreur lors du rejet:", error);
       alert(error.response?.data?.message || "Erreur lors du rejet");
     }
   };
@@ -116,7 +110,7 @@ export default function AdminFurnituresPage() {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case "AVAILABLE":
+      case "APPROVED":
         return (
           <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
             Disponible
@@ -181,15 +175,15 @@ export default function AdminFurnituresPage() {
                 {furnitures.filter((f) => f.status === "PENDING").length})
               </button>
               <button
-                onClick={() => setFilter("AVAILABLE")}
+                onClick={() => setFilter("APPROVED")}
                 className={`px-4 py-2 rounded-md font-medium ${
-                  filter === "AVAILABLE"
+                  filter === "APPROVED"
                     ? "bg-green-600 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
               >
                 Disponibles (
-                {furnitures.filter((f) => f.status === "AVAILABLE").length})
+                {furnitures.filter((f) => f.status === "APPROVED").length})
               </button>
               <button
                 onClick={() => setFilter("SOLD")}
@@ -305,10 +299,10 @@ export default function AdminFurnituresPage() {
                             >
                               👁 Détails
                             </button>
-                            {furniture.status !== "AVAILABLE" && (
+                            {furniture.status !== "APPROVED" && (
                               <button
                                 onClick={() =>
-                                  handleStatusChange(furniture.id, "AVAILABLE")
+                                  handleStatusChange(furniture.id, "APPROVED")
                                 }
                                 className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-xs"
                                 title="Approuver"

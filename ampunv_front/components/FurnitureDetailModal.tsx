@@ -195,13 +195,13 @@ export default function FurnitureDetailModal({
                 <div className="border-t border-gray-200 pt-4">
                   <p className="text-sm text-gray-500">Statut actuel</p>
                   <span className={`inline-block px-3 py-1 mt-1 text-sm font-semibold rounded-full ${
-                    furniture.status === 'AVAILABLE'
+                    furniture.status === 'APPROVED'
                       ? 'bg-green-100 text-green-800'
                       : furniture.status === 'PENDING'
                       ? 'bg-yellow-100 text-yellow-800'
                       : 'bg-red-100 text-red-800'
                   }`}>
-                    {furniture.status === 'AVAILABLE' ? 'Disponible' :
+                    {furniture.status === 'APPROVED' ? 'Disponible' :
                      furniture.status === 'PENDING' ? 'En attente' : 'Vendu'}
                   </span>
                 </div>

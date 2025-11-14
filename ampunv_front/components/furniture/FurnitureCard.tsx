@@ -36,7 +36,7 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
             </div>
           )}
           <div className="absolute top-2 right-2">
-            {furniture.status === 'AVAILABLE' ? (
+            {furniture.status === 'APPROVED' ? (
               <span className="px-2 py-1 bg-green-500 text-white text-xs font-semibold rounded">
                 Disponible
               </span>

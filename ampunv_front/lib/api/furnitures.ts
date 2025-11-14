@@ -23,12 +23,12 @@ export const furnitureApi = {
   },
 
   update: async (id: number, data: UpdateFurnitureRequest): Promise<Furniture> => {
-    const response = await apiClient.put<Furniture>(`/api/furnitures/${id}`, data);
+    const response = await apiClient.put<Furniture>(`/api/admin/furnitures/${id}`, data);
     return response.data;
   },
 
   delete: async (id: number): Promise<void> => {
-    await apiClient.delete(`/api/furnitures/${id}`);
+    await apiClient.delete(`/api/admin/furnitures/${id}`);
   },
 
   search: async (keyword: string): Promise<Furniture[]> => {
@@ -39,11 +39,15 @@ export const furnitureApi = {
   },
 
   approve: async (id: number): Promise<Furniture> => {
-    const response = await apiClient.put<Furniture>(`/api/furnitures/${id}/approve`);
+    const response = await apiClient.put<Furniture>(`/api/admin/furnitures/${id}`,
+      { status: 'APPROVED'}
+    );
     return response.data;
   },
 
   reject: async (id: number, reason: string): Promise<void> => {
-    await apiClient.put(`/api/furnitures/${id}/reject`, { reason });
+    await apiClient.put(`/api/admin/furnitures/${id}`, { 
+      status: 'REJECTED',
+      reason });
   },
 };
