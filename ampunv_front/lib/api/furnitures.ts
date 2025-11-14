@@ -37,4 +37,13 @@ export const furnitureApi = {
     );
     return response.data;
   },
+
+  approve: async (id: number): Promise<Furniture> => {
+    const response = await apiClient.put<Furniture>(`/api/furnitures/${id}/approve`);
+    return response.data;
+  },
+
+  reject: async (id: number, reason: string): Promise<void> => {
+    await apiClient.put(`/api/furnitures/${id}/reject`, { reason });
+  },
 };

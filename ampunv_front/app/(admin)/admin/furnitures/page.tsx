@@ -2,12 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Footer from "@/components/layout/Footer";
+import FurnitureDetailModal from "@/components/FurnitureDetailModal";
+import RejectModal from "@/components/RejectModal";
 import { furnitureApi } from "@/lib/api/furnitures";
 import { Furniture } from "@/types";
 
 export default function AdminFurnituresPage() {
   const [furnitures, setFurnitures] = useState<Furniture[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedFurniture, setSelectedFurniture] = useState<Furniture | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+  const [furnitureToReject, setFurnitureToReject] = useState<Furniture | null>(null);
   const [filter, setFilter] = useState<
     "ALL" | "PENDING" | "AVAILABLE" | "SOLD"
   >("PENDING");
@@ -59,6 +65,47 @@ export default function AdminFurnituresPage() {
     } catch (error: any) {
       console.error("Erreur lors de la suppression:", error);
       alert(error.response?.data?.message || "Erreur lors de la suppression");
+    }
+  };
+
+  const handleViewDetails = (furniture: Furniture) => {
+    setSelectedFurniture(furniture);
+    setIsModalOpen(true);
+  };
+
+  const handleApprove = async (id: number) => {
+    try {
+      await furnitureApi.approve(id);
+      alert("Meuble approuvé avec succès !");
+      await fetchFurnitures();
+      setIsModalOpen(false);
+    } catch (error: any) {
+      console.error("Erreur lors de l'approbation:", error);
+      alert(error.response?.data?.message || "Erreur lors de l'approbation");
+    }
+  };
+
+  const handleReject = async (id: number) => {
+    const furniture = furnitures.find(f => f.id === id);
+    if (furniture) {
+      setFurnitureToReject(furniture);
+      setIsRejectModalOpen(true);
+    }
+  };
+
+  const handleConfirmReject = async (reason: string) => {
+    if (!furnitureToReject) return;
+
+    try {
+      await furnitureApi.reject(furnitureToReject.id, reason);
+      alert(`Meuble rejeté avec succès. Raison : ${reason}`);
+      await fetchFurnitures();
+      setIsRejectModalOpen(false);
+      setIsModalOpen(false);
+      setFurnitureToReject(null);
+    } catch (error: any) {
+      console.error("Erreur lors du rejet:", error);
+      alert(error.response?.data?.message || "Erreur lors du rejet");
     }
   };
 
@@ -250,16 +297,23 @@ export default function AdminFurnituresPage() {
                           {getStatusBadge(furniture.status)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 flex-wrap">
+                            <button
+                              onClick={() => handleViewDetails(furniture)}
+                              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700 text-xs"
+                              title="Voir les détails"
+                            >
+                              👁 Détails
+                            </button>
                             {furniture.status !== "AVAILABLE" && (
                               <button
                                 onClick={() =>
                                   handleStatusChange(furniture.id, "AVAILABLE")
                                 }
-                                className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                                className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-xs"
                                 title="Approuver"
                               >
-                                ✓ Approuver
+                                ✓
                               </button>
                             )}
                             {furniture.status !== "PENDING" && (
@@ -267,7 +321,7 @@ export default function AdminFurnituresPage() {
                                 onClick={() =>
                                   handleStatusChange(furniture.id, "PENDING")
                                 }
-                                className="px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700"
+                                className="px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 text-xs"
                                 title="Mettre en attente"
                               >
                                 ⏸ En attente
@@ -275,10 +329,10 @@ export default function AdminFurnituresPage() {
                             )}
                             <button
                               onClick={() => handleDelete(furniture.id)}
-                              className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                              className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-xs"
                               title="Supprimer"
                             >
-                              🗑 Supprimer
+                              🗑
                             </button>
                           </div>
                         </td>
@@ -293,6 +347,26 @@ export default function AdminFurnituresPage() {
       </main>
 
       <Footer />
+
+      {selectedFurniture && (
+        <FurnitureDetailModal
+          furniture={selectedFurniture}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onApprove={handleApprove}
+          onReject={handleReject}
+        />
+      )}
+
+      <RejectModal
+        isOpen={isRejectModalOpen}
+        furnitureTitle={furnitureToReject?.title || ''}
+        onClose={() => {
+          setIsRejectModalOpen(false);
+          setFurnitureToReject(null);
+        }}
+        onConfirm={handleConfirmReject}
+      />
     </>
   );
 }

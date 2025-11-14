@@ -31,7 +31,6 @@ export const imageApi = {
           },
         }
       );
-      console.log('Upload réussi:', response.data);
       return response.data;
     } catch (error: any) {
       throw error;
