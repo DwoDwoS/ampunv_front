@@ -53,7 +53,7 @@ export interface Furniture {
   cityId: number;
   cityName?: string;
   condition: string;
-  status: 'AVAILABLE' | 'PENDING' | 'SOLD';
+  status: 'APPROVED' | 'PENDING' | 'SOLD';
   sellerId: number;
   sellerName?: string;
   primaryImageUrl?: string;
@@ -81,7 +81,7 @@ export interface UpdateFurnitureRequest {
   colorId?: number;
   cityId?: number;
   condition?: string;
-  status?: 'AVAILABLE' | 'PENDING' | 'SOLD';
+  status?: 'APPROVED' | 'PENDING' | 'SOLD';
 }
 
 export interface Image {

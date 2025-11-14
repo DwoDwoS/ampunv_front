@@ -17,7 +17,7 @@ export default function HomePage() {
       try {
         const furnitures = await furnitureApi.getAll();
         const featured = furnitures
-          .filter(f => f.status === 'AVAILABLE')
+          .filter(f => f.status === 'APPROVED')
           .slice(0, 8);
         setFeaturedFurnitures(featured);
       } catch (error) {

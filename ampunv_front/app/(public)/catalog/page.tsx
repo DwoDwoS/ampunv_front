@@ -38,7 +38,7 @@ export default function CatalogPage() {
         ]);
 
         const availableFurnitures = furnituresData.filter(
-          f => f.status === 'AVAILABLE'
+          f => f.status === 'APPROVED'
         );
 
         setFurnitures(availableFurnitures);
