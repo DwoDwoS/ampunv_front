@@ -23,10 +23,10 @@ export const userApi = {
   },
 
   promoteToAdmin: async (userId: number): Promise<void> => {
-    await apiClient.post(`/api/users/${userId}/promote`);
+    await apiClient.post(`/api/admin/users/${userId}/promote`);
   },
 
   demoteToSeller: async (userId: number): Promise<void> => {
-    await apiClient.post(`/api/users/${userId}/demote`);
+    await apiClient.post(`/api/admin/users/${userId}/demote`);
   },
 };

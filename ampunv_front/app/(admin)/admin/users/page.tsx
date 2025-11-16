@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { userService } from '@/app/api/user.service';
+import { userApi } from '@/lib/api/users';
 import { User } from '@/types';
 
 export default function UsersManagement() {
@@ -16,7 +16,7 @@ export default function UsersManagement() {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const data = await userService.getAllUsers();
+      const data = await userApi.getAllUsers();
       setUsers(data);
     } catch (err: any) {
       setError('Erreur lors du chargement des utilisateurs');
@@ -32,7 +32,7 @@ export default function UsersManagement() {
     }
 
     try {
-      await userService.promoteToAdmin(userId);
+      await userApi.promoteToAdmin(userId);
       await fetchUsers();
       alert('Utilisateur promu avec succès');
     } catch (err: any) {
@@ -46,7 +46,7 @@ export default function UsersManagement() {
     }
 
     try {
-      await userService.demoteToSeller(userId);
+      await userApi.demoteToSeller(userId);
       await fetchUsers();
       alert('Administrateur rétrogradé avec succès');
     } catch (err: any) {

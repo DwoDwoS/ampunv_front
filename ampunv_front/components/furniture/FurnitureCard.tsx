@@ -7,16 +7,19 @@ interface FurnitureCardProps {
 }
 
 export default function FurnitureCard({ furniture }: FurnitureCardProps) {
+  const primaryImage = furniture.images?.find(img => img.isPrimary) || furniture.images?.[0];
+
   return (
     <Link href={`/furniture/${furniture.id}`}>
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer">
         <div className="relative h-48 bg-gray-200">
-          {furniture.primaryImageUrl ? (
+          {primaryImage ? (
             <Image
-              src={furniture.primaryImageUrl}
+              src={primaryImage.url}
               alt={furniture.title}
               fill
               className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
             <div className="flex items-center justify-center h-full">
@@ -35,8 +38,9 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
               </svg>
             </div>
           )}
+          </div>
           <div className="absolute top-2 right-2">
-            {furniture.status === 'AVAILABLE' ? (
+            {furniture.status === 'APPROVED' ? (
               <span className="px-2 py-1 bg-green-500 text-white text-xs font-semibold rounded">
                 Disponible
               </span>
@@ -51,6 +55,16 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
             )}
           </div>
         </div>
+
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">
+              {furniture.furnitureTypeName || "Meuble"}
+            </span>
+            <span className="text-xs text-gray-500">
+              {furniture.condition}
+            </span>
+          </div>
 
         <div className="p-4">
           <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">

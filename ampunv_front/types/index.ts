@@ -53,12 +53,19 @@ export interface Furniture {
   cityId: number;
   cityName?: string;
   condition: string;
-  status: 'AVAILABLE' | 'PENDING' | 'SOLD';
+  status: 'APPROVED' | 'PENDING' | 'SOLD';
   sellerId: number;
   sellerName?: string;
-  primaryImageUrl?: string;
+  images?: ImageDTO[];  
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ImageDTO {
+  id: number;
+  url: string;
+  name: string;
+  isPrimary: boolean;
 }
 
 export interface CreateFurnitureRequest {
@@ -81,7 +88,7 @@ export interface UpdateFurnitureRequest {
   colorId?: number;
   cityId?: number;
   condition?: string;
-  status?: 'AVAILABLE' | 'PENDING' | 'SOLD';
+  status?: 'APPROVED' | 'PENDING' | 'SOLD';
 }
 
 export interface Image {
