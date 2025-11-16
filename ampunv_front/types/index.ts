@@ -56,9 +56,16 @@ export interface Furniture {
   status: 'APPROVED' | 'PENDING' | 'SOLD';
   sellerId: number;
   sellerName?: string;
-  primaryImageUrl?: string;
+  images?: ImageDTO[];  
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ImageDTO {
+  id: number;
+  url: string;
+  name: string;
+  isPrimary: boolean;
 }
 
 export interface CreateFurnitureRequest {
