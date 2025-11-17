@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { furnitureApi } from '@/lib/api/furnitures';
 import { imageApi } from '@/lib/api/images';
+import { paymentApi } from '@/lib/api/payments';
+import { authApi } from '@/lib/api/auth';
+import { cartManager } from '@/lib/cart';
 import { Furniture, Image } from '@/types';
 
 export default function FurnitureDetailPage() {
@@ -16,6 +19,8 @@ export default function FurnitureDetailPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isInCart, setIsInCart] = useState(false);
+  const [showAddedMessage, setShowAddedMessage] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +31,7 @@ export default function FurnitureDetailPage() {
         ]);
         setFurniture(furnitureData);
         setImages(imagesData);
+        setIsInCart(cartManager.isInCart(Number(furnitureId)));
       } catch (err: any) {
         setError('Impossible de charger le meuble');
       } finally {
@@ -34,10 +40,73 @@ export default function FurnitureDetailPage() {
     };
 
     fetchData();
+
+    const handleCartUpdate = () => {
+      setIsInCart(cartManager.isInCart(Number(furnitureId)));
+    };
+
+    window.addEventListener('cartUpdated', handleCartUpdate);
+    return () => window.removeEventListener('cartUpdated', handleCartUpdate);
   }, [furnitureId]);
 
-  const handleBuyNow = () => {
-    router.push(`/payment?furniture_id=${furnitureId}`);
+  const handleBuyNow = async () => {
+    const isAuthenticated = authApi.isAuthenticated();
+    const user = authApi.getUser();
+    let buyerEmail: string | null = null;
+
+    if (!isAuthenticated) {
+      buyerEmail = prompt('Entrez votre email pour recevoir la confirmation :');
+      
+      if (buyerEmail === null) {
+        return;
+      }
+      
+      if (!buyerEmail.trim() || !buyerEmail.includes('@')) {
+        alert('Email invalide. Veuillez réessayer.');
+        return;
+      }
+    } else {
+      buyerEmail = user?.email || null;
+    }
+
+    try {
+      console.log('Création du paiement pour le meuble:', furnitureId, 'Email:', buyerEmail);
+      
+      const response = await paymentApi.createPaymentIntent(
+        Number(furnitureId),
+        buyerEmail || undefined
+      );
+
+      console.log('Réponse de l\'API:', response);
+      
+      const { clientSecret } = response;
+      
+      if (!clientSecret) {
+        throw new Error('Client secret manquant dans la réponse');
+      }
+      
+      router.push(`/payment?furniture_id=${furnitureId}&client_secret=${clientSecret}`);
+    } catch (error: any) {
+      
+      const errorMessage = error.response?.data?.error 
+        || error.response?.data?.message 
+        || error.message
+        || 'Erreur lors de la création du paiement. Veuillez réessayer.';
+      
+      alert(`Erreur: ${errorMessage}`);
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (!furniture) return;
+    
+    const added = cartManager.addToCart(furniture);
+    if (added) {
+      setShowAddedMessage(true);
+      setTimeout(() => setShowAddedMessage(false), 3000);
+    } else {
+      alert('Ce meuble est déjà dans votre panier');
+    }
   };
 
   if (loading) {
@@ -144,12 +213,45 @@ export default function FurnitureDetailPage() {
               </div>
 
               {furniture.status === 'APPROVED' && (
-                <button
-                  onClick={handleBuyNow}
-                  className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-                >
-                  Acheter maintenant
-                </button>
+                <div className="space-y-3">
+                  {showAddedMessage && (
+                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center gap-2">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Ajouté au panier !
+                    </div>
+                  )}
+                  
+                  {!isInCart ? (
+                    <button
+                      onClick={handleAddToCart}
+                      className="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors font-semibold flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                      </svg>
+                      Ajouter au panier
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => router.push('/cart')}
+                      className="w-full bg-gray-600 text-white py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors font-semibold flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Déjà dans le panier
+                    </button>
+                  )}
+                  
+                  <button
+                    onClick={handleBuyNow}
+                    className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                  >
+                    Acheter maintenant
+                  </button>
+                </div>
               )}
 
               {furniture.status === 'SOLD' && (

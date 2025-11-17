@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { authApi } from '@/lib/api/auth';
 import { useState } from 'react';
+import CartButton from '@/components/CartButton';
 
 export default function PublicNavbar() {
   const router = useRouter();
@@ -48,6 +49,7 @@ export default function PublicNavbar() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
+            <CartButton />
             {isAuthenticated ? (
               <>
                 <span className="text-sm text-gray-700">

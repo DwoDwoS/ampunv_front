@@ -10,13 +10,17 @@ import { Furniture } from "@/types";
 export default function AdminFurnituresPage() {
   const [furnitures, setFurnitures] = useState<Furniture[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedFurniture, setSelectedFurniture] = useState<Furniture | null>(null);
+  const [selectedFurniture, setSelectedFurniture] = useState<Furniture | null>(
+    null
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
-  const [furnitureToReject, setFurnitureToReject] = useState<Furniture | null>(null);
-  const [filter, setFilter] = useState<
-    "ALL" | "PENDING" | "APPROVED" | "SOLD"
-  >("PENDING");
+  const [furnitureToReject, setFurnitureToReject] = useState<Furniture | null>(
+    null
+  );
+  const [filter, setFilter] = useState<"ALL" | "PENDING" | "APPROVED" | "SOLD">(
+    "PENDING"
+  );
 
   useEffect(() => {
     fetchFurnitures();
@@ -81,7 +85,7 @@ export default function AdminFurnituresPage() {
   };
 
   const handleReject = async (id: number) => {
-    const furniture = furnitures.find(f => f.id === id);
+    const furniture = furnitures.find((f) => f.id === id);
     if (furniture) {
       setFurnitureToReject(furniture);
       setIsRejectModalOpen(true);
@@ -354,7 +358,7 @@ export default function AdminFurnituresPage() {
 
       <RejectModal
         isOpen={isRejectModalOpen}
-        furnitureTitle={furnitureToReject?.title || ''}
+        furnitureTitle={furnitureToReject?.title || ""}
         onClose={() => {
           setIsRejectModalOpen(false);
           setFurnitureToReject(null);

@@ -1,4 +1,4 @@
-import apiClient from './client';
+import apiClient from "./client";
 
 export interface PaymentIntentResponse {
   clientSecret: string;
@@ -6,11 +6,19 @@ export interface PaymentIntentResponse {
 }
 
 export const paymentApi = {
-  createPaymentIntent: async (furnitureId: number): Promise<PaymentIntentResponse> => {
+  createPaymentIntent: async (
+    furnitureId: number,
+    buyerEmail?: string
+  ): Promise<PaymentIntentResponse> => {
     const response = await apiClient.post<PaymentIntentResponse>(
       `/api/payments/create-intent`,
       null,
-      { params: { furnitureId } }
+      { 
+        params: { 
+          furnitureId,
+          ...(buyerEmail && { buyerEmail })
+        } 
+      }
     );
     return response.data;
   },
