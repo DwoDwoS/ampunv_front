@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Footer from '@/components/layout/Footer';
-import FurnitureDetailModal from '@/components/FurnitureDetailModal';
-import RejectModal from '@/components/RejectModal';
-import { furnitureApi } from '@/lib/api/furnitures';
-import { Furniture } from '@/types';
+import { useState, useEffect } from "react";
+import Footer from "@/components/layout/Footer";
+import FurnitureDetailModal from "@/components/FurnitureDetailModal";
+import RejectModal from "@/components/RejectModal";
+import { furnitureApi } from "@/lib/api/furnitures";
+import { referenceApi } from "@/lib/api/reference";
+import { Furniture, ReferenceData } from "@/types";
 
 export default function AdminFurnituresPage() {
   const [furnitures, setFurnitures] = useState<Furniture[]>([]);
@@ -18,12 +19,16 @@ export default function AdminFurnituresPage() {
   const [furnitureToReject, setFurnitureToReject] = useState<Furniture | null>(
     null
   );
+  const [referenceData, setReferenceData] = useState<ReferenceData | null>(
+    null
+  );
   const [filter, setFilter] = useState<"ALL" | "PENDING" | "APPROVED" | "SOLD">(
     "PENDING"
   );
 
   useEffect(() => {
     fetchFurnitures();
+    fetchReferenceData();
   }, []);
 
   const fetchFurnitures = async () => {
@@ -35,6 +40,20 @@ export default function AdminFurnituresPage() {
       alert("Impossible de charger les meubles");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchReferenceData = async () => {
+    try {
+      const baseData = await referenceApi.getAll();
+      const cities = await referenceApi.getCities();
+
+      setReferenceData({
+        ...baseData,
+        cities,
+      });
+    } catch (error) {
+      console.error("Erreur chargement referenceData", error);
     }
   };
 
@@ -346,13 +365,14 @@ export default function AdminFurnituresPage() {
 
       <Footer />
 
-      {selectedFurniture && (
+      {selectedFurniture && referenceData && (
         <FurnitureDetailModal
           furniture={selectedFurniture}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onApprove={handleApprove}
           onReject={handleReject}
+          referenceData={referenceData}
         />
       )}
 

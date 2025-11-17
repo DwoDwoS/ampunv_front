@@ -140,4 +140,5 @@ export interface ReferenceData {
   furnitureTypes: FurnitureType[];
   materials: Material[];
   colors: Color[];
+  cities: City[];
 }
