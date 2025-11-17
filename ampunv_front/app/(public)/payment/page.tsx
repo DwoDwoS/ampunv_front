@@ -1,12 +1,19 @@
 'use client';
 
-import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
-import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { paymentApi } from '@/lib/api/payments';
+import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
+import {
+  Elements,
+  PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { paymentApi } from "@/lib/api/payments";
 
-const stripePromise = loadStripe('pk_test_51SNWrrHgh7dQEHW4RVB0S6hxFnKLURzXSkKbG8VJ9E4ScpoA9RWhsNvJ47xv37V13acI8KmEE9u3oeImItVJ5Rty005ABfJA6E');
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 function CheckoutForm({ furnitureId }: { furnitureId: number }) {
   const stripe = useStripe();
@@ -32,7 +39,7 @@ function CheckoutForm({ furnitureId }: { furnitureId: number }) {
     });
 
     if (error) {
-      setMessage(error.message || 'Une erreur est survenue');
+      setMessage(error.message || "Une erreur est survenue");
     }
 
     setIsLoading(false);
@@ -41,19 +48,17 @@ function CheckoutForm({ furnitureId }: { furnitureId: number }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <PaymentElement />
-      
+
       <button
         type="submit"
         disabled={isLoading || !stripe || !elements}
         className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
       >
-        {isLoading ? 'Traitement en cours...' : 'Payer maintenant'}
+        {isLoading ? "Traitement en cours..." : "Payer maintenant"}
       </button>
 
       {message && (
-        <div className="p-4 bg-red-100 text-red-700 rounded-lg">
-          {message}
-        </div>
+        <div className="p-4 bg-red-100 text-red-700 rounded-lg">{message}</div>
       )}
     </form>
   );
@@ -61,14 +66,23 @@ function CheckoutForm({ furnitureId }: { furnitureId: number }) {
 
 export default function PaymentPage() {
   const searchParams = useSearchParams();
-  const furnitureId = searchParams.get('furniture_id');
-  const [clientSecret, setClientSecret] = useState<string>('');
-  const [loading, setLoading] = useState(true);
+  const furnitureId = searchParams.get("furniture_id");
+  const clientSecretParam = searchParams.get("client_secret");
+  const [clientSecret, setClientSecret] = useState<string>(
+    clientSecretParam || ""
+  );
+  const [loading, setLoading] = useState(!clientSecretParam);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (clientSecretParam) {
+      setClientSecret(clientSecretParam);
+      setLoading(false);
+      return;
+    }
+
     if (!furnitureId) {
-      setError('ID du meuble manquant');
+      setError("ID du meuble manquant");
       setLoading(false);
       return;
     }
@@ -80,10 +94,12 @@ export default function PaymentPage() {
         setLoading(false);
       })
       .catch((err) => {
-        setError(err.response?.data?.error || 'Erreur lors de la création du paiement');
+        setError(
+          err.response?.data?.error || "Erreur lors de la création du paiement"
+        );
         setLoading(false);
       });
-  }, [furnitureId]);
+  }, [furnitureId, clientSecretParam]);
 
   if (loading) {
     return (
@@ -110,15 +126,17 @@ export default function PaymentPage() {
   const options: StripeElementsOptions = {
     clientSecret,
     appearance: {
-      theme: 'stripe',
+      theme: "stripe",
     },
   };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-2xl font-bold mb-6 text-center">Paiement sécurisé</h1>
-        
+        <h1 className="text-2xl font-bold mb-6 text-center">
+          Paiement sécurisé
+        </h1>
+
         {clientSecret && (
           <Elements options={options} stripe={stripePromise}>
             <CheckoutForm furnitureId={Number(furnitureId)} />

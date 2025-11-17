@@ -56,7 +56,8 @@ export interface Furniture {
   status: 'APPROVED' | 'PENDING' | 'SOLD';
   sellerId: number;
   sellerName?: string;
-  images?: ImageDTO[];  
+  images?: ImageDTO[];
+  primaryImageUrl: string;  
   createdAt: string;
   updatedAt: string;
 }
@@ -139,4 +140,5 @@ export interface ReferenceData {
   furnitureTypes: FurnitureType[];
   materials: Material[];
   colors: Color[];
+  cities: City[];
 }
