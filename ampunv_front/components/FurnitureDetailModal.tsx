@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Furniture, Image } from '@/types';
 import { imageApi } from '@/lib/api/images';
-import PublicNavbar from './layout/PublicNavbar';
 
 interface FurnitureDetailModalProps {
   furniture: Furniture;
@@ -37,7 +36,6 @@ export default function FurnitureDetailModal({
       setImages(data);
       setCurrentImageIndex(0);
     } catch (error) {
-      console.error('Erreur lors du chargement des images:', error);
       setImages([]);
     } finally {
       setLoading(false);
@@ -55,9 +53,7 @@ export default function FurnitureDetailModal({
   if (!isOpen) return null;
 
   return (
-    <PublicNavbar />
-    
-    <div className="fixed inset-0 z-50 overflow-y-auto" onClick={onClose}>
+    <div className="fixed inset-0 z-40 overflow-y-auto" onClick={onClose}>
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"></div>
 

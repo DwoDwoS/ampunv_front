@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Footer from "@/components/layout/Footer";
-import FurnitureDetailModal from "@/components/FurnitureDetailModal";
-import RejectModal from "@/components/RejectModal";
-import { furnitureApi } from "@/lib/api/furnitures";
-import { Furniture } from "@/types";
+import { useState, useEffect } from 'react';
+import Footer from '@/components/layout/Footer';
+import FurnitureDetailModal from '@/components/FurnitureDetailModal';
+import RejectModal from '@/components/RejectModal';
+import { furnitureApi } from '@/lib/api/furnitures';
+import { Furniture } from '@/types';
 
 export default function AdminFurnituresPage() {
   const [furnitures, setFurnitures] = useState<Furniture[]>([]);
