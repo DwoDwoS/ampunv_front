@@ -7,6 +7,11 @@ export const furnitureApi = {
     return response.data;
   },
 
+  getAllForAdmin: async (): Promise<Furniture[]> => {
+    const response = await apiClient.get<Furniture[]>('/api/admin/furnitures');
+    return response.data;
+  },
+
   getById: async (id: number): Promise<Furniture> => {
     const response = await apiClient.get<Furniture>(`/api/furnitures/${id}`);
     return response.data;

@@ -197,11 +197,11 @@ export default function CartPage() {
           <div className="space-y-4">
             <div className="flex justify-between items-center text-lg">
               <span className="text-gray-700">Sous-total</span>
-              <span className="font-semibold">{total.toFixed(2)} €</span>
+              <span className="font-semibold text-gray-600 ">{total.toFixed(2)} €</span>
             </div>
             <div className="flex justify-between items-center text-lg">
               <span className="text-gray-700">Frais de service</span>
-              <span className="font-semibold">0.00 €</span>
+              <span className="font-semibold text-gray-600">0.00 €</span>
             </div>
             <div className="border-t border-gray-200 pt-4">
               <div className="flex justify-between items-center text-2xl font-bold">
