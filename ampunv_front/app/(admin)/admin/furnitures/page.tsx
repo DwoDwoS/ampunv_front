@@ -34,7 +34,9 @@ export default function AdminFurnituresPage() {
   const fetchFurnitures = async () => {
     try {
       setLoading(true);
-      const data = await furnitureApi.getAll();
+      const data = await furnitureApi.getAllForAdmin();
+      console.log("Meubles chargés depuis le backend:", data);
+      console.log("Statuts des meubles:", data.map(f => ({ id: f.id, title: f.title, status: f.status })));
       setFurnitures(data);
     } catch (error) {
       alert("Impossible de charger les meubles");
