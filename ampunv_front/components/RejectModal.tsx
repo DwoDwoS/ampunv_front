@@ -89,7 +89,7 @@ export default function RejectModal({
               <textarea
                 value={customReason}
                 onChange={(e) => setCustomReason(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="w-full px-3 py-2 border text-gray-500 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                 rows={3}
                 placeholder="Expliquez pourquoi ce meuble est rejeté..."
               />
