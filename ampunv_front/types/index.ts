@@ -53,7 +53,8 @@ export interface Furniture {
   cityId: number;
   cityName?: string;
   condition: string;
-  status: 'APPROVED' | 'PENDING' | 'SOLD';
+  status: 'APPROVED' | 'PENDING' | 'SOLD' | 'REJECTED';
+  rejectionReason?: string;
   sellerId: number;
   sellerName?: string;
   images?: ImageDTO[];
