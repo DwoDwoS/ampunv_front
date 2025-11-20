@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Footer from "@/components/layout/Footer";
-import FurnitureDetailModal from "@/components/FurnitureDetailModal";
-import RejectModal from "@/components/RejectModal";
-import { furnitureApi } from "@/lib/api/furnitures";
-import { referenceApi } from "@/lib/api/reference";
-import { Furniture, ReferenceData } from "@/types";
+import { useState, useEffect } from 'react';
+import Footer from '@/components/layout/Footer';
+import FurnitureDetailModal from '@/components/FurnitureDetailModal';
+import RejectModal from '@/components/RejectModal';
+import { furnitureApi } from '@/lib/api/furnitures';
+import { referenceApi } from '@/lib/api/reference';
+import { Furniture, ReferenceData } from '@/types';
 
 export default function AdminFurnituresPage() {
   const [furnitures, setFurnitures] = useState<Furniture[]>([]);
@@ -374,10 +374,10 @@ export default function AdminFurnituresPage() {
                         <img
                           src={furniture.primaryImageUrl}
                           alt={furniture.title}
-                          className="h-20 w-20 sm:h-24 sm:w-24 object-cover rounded flex-shrink-0"
+                          className="h-20 w-20 sm:h-24 sm:w-24 object-cover rounded shrink-0"
                         />
                       ) : (
-                        <div className="h-20 w-20 sm:h-24 sm:w-24 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                        <div className="h-20 w-20 sm:h-24 sm:w-24 bg-gray-200 rounded flex items-center justify-center shrink-0">
                           <svg
                             className="h-10 w-10 text-gray-400"
                             fill="none"

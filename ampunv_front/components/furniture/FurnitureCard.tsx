@@ -115,7 +115,7 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
             </p>
             {furniture.cityName && (
               <p className="text-xs text-gray-500">
-                📍 {furniture.cityName}
+                {furniture.cityName}
               </p>
             )}
           </div>
