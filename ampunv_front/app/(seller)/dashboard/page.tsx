@@ -57,13 +57,24 @@ export default function SellerDashboard() {
       
       <main className="min-h-screen bg-gray-50 py-4 sm:py-8">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          <div className="mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-              Bienvenue, {user?.firstname} !
-            </h1>
-            <p className="mt-2 text-sm sm:text-base text-gray-600">
-              Gérez vos annonces de meubles
-            </p>
+          <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                Bienvenue, {user?.firstname} !
+              </h1>
+              <p className="mt-2 text-sm sm:text-base text-gray-600">
+                Gérez vos annonces de meubles
+              </p>
+            </div>
+            <Link
+              href="/profile"
+              className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              Mon profil
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-6 mb-6 sm:mb-8">
