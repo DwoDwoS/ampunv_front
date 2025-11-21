@@ -133,7 +133,7 @@ export default function PaymentPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-2xl font-bold mb-6 text-center">
+        <h1 className="text-2xl font-bold mb-6 text-gray-600 text-center">
           Paiement sécurisé
         </h1>
 

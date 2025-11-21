@@ -66,9 +66,7 @@ export default function CartPage() {
         cartItems[0].furniture.id,
         buyerEmail || undefined
       );
-      
-      console.log('Réponse de l\'API:', response);
-      
+            
       const { clientSecret } = response;
       
       if (!clientSecret) {
@@ -82,8 +80,6 @@ export default function CartPage() {
         router.push(`/payment?furniture_ids=${furnitureIds}&client_secret=${clientSecret}`);
       }
     } catch (error: any) {
-      console.error('Erreur détaillée:', error);
-      console.error('Réponse erreur:', error.response?.data);
       
       const errorMessage = error.response?.data?.error 
         || error.response?.data?.message 

@@ -30,8 +30,13 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+
+    const furnitureWithImage: Furniture = {
+      ...furniture,
+      primaryImageUrl: primaryImage?.url || ''
+};
     
-    const added = cartManager.addToCart(furniture);
+    const added = cartManager.addToCart(furnitureWithImage);
     if (!added) {
       alert('Ce meuble est déjà dans votre panier');
     }

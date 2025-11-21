@@ -100,7 +100,14 @@ export default function FurnitureDetailPage() {
   const handleAddToCart = () => {
     if (!furniture) return;
     
-    const added = cartManager.addToCart(furniture);
+    const primaryImage = images.find(img => img.isPrimary);
+  
+    const furnitureWithImage: Furniture = {
+    ...furniture,
+    primaryImageUrl: primaryImage?.url || images[0]?.url || ''
+  };
+  
+    const added = cartManager.addToCart(furnitureWithImage);
     if (added) {
       setShowAddedMessage(true);
       setTimeout(() => setShowAddedMessage(false), 3000);

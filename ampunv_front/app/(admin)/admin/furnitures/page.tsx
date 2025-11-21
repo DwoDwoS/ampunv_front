@@ -35,9 +35,14 @@ export default function AdminFurnituresPage() {
     try {
       setLoading(true);
       const data = await furnitureApi.getAllForAdmin();
-      console.log("Meubles chargés depuis le backend:", data);
-      console.log("Statuts des meubles:", data.map(f => ({ id: f.id, title: f.title, status: f.status })));
-      setFurnitures(data);
+      const furnituresWithImages = data.map(furniture => {
+      const primaryImage = furniture.images?.find(img => img.isPrimary) || furniture.images?.[0];
+      return {
+        ...furniture,
+        primaryImageUrl: primaryImage?.url || ''
+      };
+    });
+      setFurnitures(furnituresWithImages);
     } catch (error) {
       alert("Impossible de charger les meubles");
     } finally {
