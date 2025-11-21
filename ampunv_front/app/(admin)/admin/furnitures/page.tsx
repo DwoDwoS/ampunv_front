@@ -7,6 +7,7 @@ import RejectModal from '@/components/RejectModal';
 import { furnitureApi } from '@/lib/api/furnitures';
 import { referenceApi } from '@/lib/api/reference';
 import { Furniture, ReferenceData } from '@/types';
+import { addPrimaryImageUrlToList } from '@/lib/utils/furniture';
 
 export default function AdminFurnituresPage() {
   const [furnitures, setFurnitures] = useState<Furniture[]>([]);
@@ -32,23 +33,16 @@ export default function AdminFurnituresPage() {
   }, []);
 
   const fetchFurnitures = async () => {
-    try {
-      setLoading(true);
-      const data = await furnitureApi.getAllForAdmin();
-      const furnituresWithImages = data.map(furniture => {
-      const primaryImage = furniture.images?.find(img => img.isPrimary) || furniture.images?.[0];
-      return {
-        ...furniture,
-        primaryImageUrl: primaryImage?.url || ''
-      };
-    });
-      setFurnitures(furnituresWithImages);
-    } catch (error) {
-      alert("Impossible de charger les meubles");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+    const data = await furnitureApi.getAllForAdmin();
+    setFurnitures(addPrimaryImageUrlToList(data));
+  } catch (error) {
+    alert("Impossible de charger les meubles");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const fetchReferenceData = async () => {
     try {
