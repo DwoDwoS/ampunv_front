@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Furniture } from '@/types';
-import Image from 'next/image';
-import { cartManager } from '@/lib/cart';
-import { useState, useEffect } from 'react';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Furniture } from "@/types";
+import Image from "next/image";
+import { cartManager } from "@/lib/cart";
+import { useState, useEffect } from "react";
+import { addPrimaryImageUrl } from "@/lib/utils/furniture";
 
 interface FurnitureCardProps {
   furniture: Furniture;
@@ -13,7 +14,8 @@ interface FurnitureCardProps {
 
 export default function FurnitureCard({ furniture }: FurnitureCardProps) {
   const router = useRouter();
-  const primaryImage = furniture.images?.find(img => img.isPrimary) || furniture.images?.[0];
+  const primaryImage =
+    furniture.images?.find((img) => img.isPrimary) || furniture.images?.[0];
   const [isInCart, setIsInCart] = useState(false);
 
   useEffect(() => {
@@ -23,24 +25,24 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
       setIsInCart(cartManager.isInCart(furniture.id));
     };
 
-    window.addEventListener('cartUpdated', handleCartUpdate);
-    return () => window.removeEventListener('cartUpdated', handleCartUpdate);
+    window.addEventListener("cartUpdated", handleCartUpdate);
+    return () => window.removeEventListener("cartUpdated", handleCartUpdate);
   }, [furniture.id]);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    const added = cartManager.addToCart(furniture);
+
+    const added = cartManager.addToCart(addPrimaryImageUrl(furniture));
     if (!added) {
-      alert('Ce meuble est déjà dans votre panier');
+      alert("Ce meuble est déjà dans votre panier");
     }
   };
 
   const handleGoToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    router.push('/cart');
+    router.push("/cart");
   };
 
   return (
@@ -73,11 +75,11 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
             </div>
           )}
           <div className="absolute top-2 right-2">
-            {furniture.status === 'APPROVED' ? (
+            {furniture.status === "APPROVED" ? (
               <span className="px-2 py-1 bg-green-500 text-white text-xs font-semibold rounded">
                 Disponible
               </span>
-            ) : furniture.status === 'PENDING' ? (
+            ) : furniture.status === "PENDING" ? (
               <span className="px-2 py-1 bg-yellow-500 text-white text-xs font-semibold rounded">
                 En attente
               </span>
@@ -96,15 +98,13 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
             <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">
               {furniture.furnitureTypeName || "Meuble"}
             </span>
-            <span className="text-xs text-gray-500">
-              {furniture.condition}
-            </span>
+            <span className="text-xs text-gray-500">{furniture.condition}</span>
           </div>
 
           <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">
             {furniture.title}
           </h3>
-          
+
           <p className="text-gray-600 text-sm mb-3 line-clamp-2">
             {furniture.description}
           </p>
@@ -114,21 +114,29 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
               {furniture.price.toFixed(2)} €
             </p>
             {furniture.cityName && (
-              <p className="text-xs text-gray-500">
-                {furniture.cityName}
-              </p>
+              <p className="text-xs text-gray-500">{furniture.cityName}</p>
             )}
           </div>
         </Link>
 
-        {furniture.status === 'APPROVED' && (
-          !isInCart ? (
+        {furniture.status === "APPROVED" &&
+          (!isInCart ? (
             <button
               onClick={handleAddToCart}
               className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors text-sm font-semibold flex items-center justify-center gap-2"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
               </svg>
               Ajouter au panier
             </button>
@@ -137,13 +145,22 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
               onClick={handleGoToCart}
               className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors text-sm font-semibold flex items-center justify-center gap-2"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
               Dans le panier
             </button>
-          )
-        )}
+          ))}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import RejectModal from '@/components/RejectModal';
 import { furnitureApi } from '@/lib/api/furnitures';
 import { referenceApi } from '@/lib/api/reference';
 import { Furniture, ReferenceData } from '@/types';
+import { addPrimaryImageUrlToList } from '@/lib/utils/furniture';
 
 export default function AdminFurnituresPage() {
   const [furnitures, setFurnitures] = useState<Furniture[]>([]);
@@ -32,18 +33,16 @@ export default function AdminFurnituresPage() {
   }, []);
 
   const fetchFurnitures = async () => {
-    try {
-      setLoading(true);
-      const data = await furnitureApi.getAllForAdmin();
-      console.log("Meubles chargés depuis le backend:", data);
-      console.log("Statuts des meubles:", data.map(f => ({ id: f.id, title: f.title, status: f.status })));
-      setFurnitures(data);
-    } catch (error) {
-      alert("Impossible de charger les meubles");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+    const data = await furnitureApi.getAllForAdmin();
+    setFurnitures(addPrimaryImageUrlToList(data));
+  } catch (error) {
+    alert("Impossible de charger les meubles");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const fetchReferenceData = async () => {
     try {
