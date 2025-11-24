@@ -24,7 +24,7 @@ export default function AdminFurnituresPage() {
     null
   );
   const [filter, setFilter] = useState<"ALL" | "PENDING" | "APPROVED" | "SOLD">(
-    "PENDING"
+    "ALL"
   );
 
   useEffect(() => {

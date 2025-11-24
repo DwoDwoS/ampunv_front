@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { furnitureApi } from "@/lib/api/furnitures";
-import { imageApi } from "@/lib/api/images";
-import { paymentApi } from "@/lib/api/payments";
-import { authApi } from "@/lib/api/auth";
-import { cartManager } from "@/lib/cart";
-import { Furniture, Image } from "@/types";
-import { addPrimaryImageUrl } from "@/lib/utils/furniture";
+import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { furnitureApi } from '@/lib/api/furnitures';
+import { imageApi } from '@/lib/api/images';
+import { paymentApi } from '@/lib/api/payments';
+import { authApi } from '@/lib/api/auth';
+import { cartManager } from '@/lib/cart';
+import { Furniture, Image } from '@/types';
+import { addPrimaryImageUrl } from '@/lib/utils/furniture';
 
 export default function FurnitureDetailPage() {
   const params = useParams();
@@ -82,8 +82,6 @@ export default function FurnitureDetailPage() {
         Number(furnitureId),
         buyerEmail || undefined
       );
-
-      console.log("Réponse de l'API:", response);
 
       const { clientSecret } = response;
 

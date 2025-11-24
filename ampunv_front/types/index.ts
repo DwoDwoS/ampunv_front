@@ -7,6 +7,7 @@ export interface User {
   role: 'SELLER' | 'ADMIN';
   createdAt: string;
   updatedAt: string;
+  isOriginalAdmin?: boolean;
 }
 
 export interface LoginRequest {

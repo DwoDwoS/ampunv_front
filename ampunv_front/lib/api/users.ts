@@ -42,4 +42,9 @@ export const userApi = {
   deleteMyAccount: async (): Promise<void> => {
     await apiClient.delete('/api/users/myprofile');
   },
+
+  deleteUser: async (userId: number) => {
+    const response = await apiClient.delete(`/api/users/${userId}`);
+    return response.data;
+  },
 };
