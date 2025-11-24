@@ -145,7 +145,6 @@ export default function CreateFurniturePage() {
         condition: formData.condition,
       };
 
-      console.log('Création du meuble...', furnitureData);
       let createdFurniture;
       let furnitureId;
       
