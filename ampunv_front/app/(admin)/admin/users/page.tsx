@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { userApi } from '@/lib/api/users';
-import { User } from '@/types';
+import { useEffect, useState } from "react";
+import { userApi } from "@/lib/api/users";
+import { User } from "@/types";
 
 export default function UsersManagement() {
   const [users, setUsers] = useState<User[]>([]);
@@ -99,7 +99,74 @@ export default function UsersManagement() {
         </div>
       )}
 
-      <div className="bg-white shadow rounded-lg overflow-hidden">
+      <div className="space-y-4 md:hidden">
+        {users.map((user) => (
+          <div
+            key={user.id}
+            className="bg-white rounded-lg shadow p-4 border border-gray-100"
+          >
+            <div className="flex justify-between items-center mb-3">
+              <h2 className="font-bold text-gray-900">
+                {user.firstname} {user.lastname}
+              </h2>
+
+              <span
+                className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                  user.role === "ADMIN"
+                    ? "bg-green-100 text-green-800"
+                    : "bg-blue-100 text-blue-800"
+                }`}
+              >
+                {user.role}
+              </span>
+            </div>
+
+            <div className="text-sm text-gray-700 space-y-1">
+              <p>
+                <span className="font-semibold">ID :</span> {user.id}
+              </p>
+              <p>
+                <span className="font-semibold">Email :</span> {user.email}
+              </p>
+              <p>
+                <span className="font-semibold">Ville :</span> {user.cityId}
+              </p>
+            </div>
+
+            <div className="mt-4 flex flex-col gap-2">
+              {!user.isOriginalAdmin &&
+                (user.role === "SELLER" ? (
+                  <button
+                    onClick={() => handlePromote(user.id)}
+                    className="w-full text-green-600 hover:text-green-900 text-sm flex items-center gap-1.5"
+                  >
+                    Promouvoir
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleDemote(user.id)}
+                    className="w-full text-orange-600 hover:text-orange-900 text-sm flex items-center gap-1.5"
+                  >
+                    Rétrograder
+                  </button>
+                ))}
+
+              {!user.isOriginalAdmin && (
+                <button
+                  onClick={() =>
+                    handleDelete(user.id, `${user.firstname} ${user.lastname}`)
+                  }
+                  className="w-full text-red-600 hover:text-red-900 text-sm flex items-center gap-1.5"
+                >
+                  Supprimer
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="hidden md:block bg-white shadow rounded-lg overflow-hidden mt-6">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -123,6 +190,7 @@ export default function UsersManagement() {
               </th>
             </tr>
           </thead>
+
           <tbody className="bg-white divide-y divide-gray-200">
             {users.map((user) => (
               <tr key={user.id}>
@@ -149,49 +217,22 @@ export default function UsersManagement() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {user.cityId}
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex items-center gap-3">
                     {!user.isOriginalAdmin &&
                       (user.role === "SELLER" ? (
                         <button
                           onClick={() => handlePromote(user.id)}
-                          className="flex items-center gap-1.5 text-green-600 hover:text-green-900 transition-colors"
-                          title="Promouvoir en administrateur"
+                          className="text-green-600 hover:text-green-900"
                         >
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M5 10l7-7m0 0l7 7m-7-7v18"
-                            />
-                          </svg>
                           Promouvoir
                         </button>
                       ) : (
                         <button
                           onClick={() => handleDemote(user.id)}
-                          className="flex items-center gap-1.5 text-orange-600 hover:text-orange-900 transition-colors"
-                          title="Rétrograder en vendeur"
+                          className="text-orange-600 hover:text-orange-900"
                         >
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                            />
-                          </svg>
                           Rétrograder
                         </button>
                       ))}
@@ -204,22 +245,8 @@ export default function UsersManagement() {
                             `${user.firstname} ${user.lastname}`
                           )
                         }
-                        className="flex items-center gap-1.5 text-red-600 hover:text-red-900 transition-colors"
-                        title="Supprimer l'utilisateur"
+                        className="text-red-600 hover:text-red-900"
                       >
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
                         Supprimer
                       </button>
                     )}
