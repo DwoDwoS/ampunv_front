@@ -8,6 +8,7 @@ export default function PaymentSuccessPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  const [countdown, setCountdown] = useState(10);
   const furnitureId = searchParams.get('furniture_id');
   const paymentIntent = searchParams.get('payment_intent');
 
@@ -18,6 +19,23 @@ export default function PaymentSuccessPage() {
     }
     setStatus('success');
   }, [paymentIntent]);
+
+  useEffect(() => {
+    if (status === 'success') {
+      const timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            router.push('/catalog');
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [status, router]);
 
   if (status === 'loading') {
     return (
@@ -62,8 +80,11 @@ export default function PaymentSuccessPage() {
         </div>
         
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Paiement réussi !</h1>
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-600 mb-4">
           Votre achat a été confirmé. Vous recevrez un email de confirmation prochainement.
+        </p>
+        <p className="text-sm text-gray-500 mb-6">
+          Redirection automatique dans {countdown} seconde{countdown > 1 ? 's' : ''}...
         </p>
 
         <div className="space-y-3">
@@ -79,7 +100,7 @@ export default function PaymentSuccessPage() {
             href="/catalog"
             className="block w-full bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors"
           >
-            Retour au catalogue
+            Retourner maintenant au catalogue
           </Link>
         </div>
       </div>

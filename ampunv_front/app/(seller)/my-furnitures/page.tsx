@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Furniture } from "@/types";
 import { furnitureApi } from "@/lib/api/furnitures";
 import PublicNavbar from "@/components/layout/PublicNavbar";
+import EditFurniturePage from "../edit-furniture/[id]/page";
 
 export default function MyFurnituresPage() {
   const [furnitures, setFurnitures] = useState<Furniture[]>([]);
@@ -36,8 +37,14 @@ export default function MyFurnituresPage() {
         text: "text-green-800 font-semibold",
         label: "Approuvé",
       },
-      REJECTED: { bg: "bg-red-100", text: "text-red-800 font-semibold", label: "Rejeté" },
-      SOLD: { bg: "bg-gray-100", text: "text-gray-800 font-semibold", label: "Vendu" },
+      REJECTED: { 
+        bg: "bg-red-100", 
+        text: "text-red-800 font-semibold", 
+        label: "Rejeté" },
+      SOLD: { 
+        bg: "bg-gray-100", 
+        text: "text-gray-800 font-semibold", 
+        label: "Vendu" },
     };
 
     const badge = badges[status as keyof typeof badges] || badges.PENDING;
@@ -188,7 +195,7 @@ export default function MyFurnituresPage() {
                     <div className="flex gap-2">
                       <button
                         onClick={() =>
-                          alert(`Modifier le meuble #${furniture.id}`)
+                          <EditFurniturePage />
                         }
                         className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
                       >
