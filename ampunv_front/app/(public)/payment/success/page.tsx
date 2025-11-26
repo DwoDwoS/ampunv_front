@@ -7,48 +7,26 @@ import Link from 'next/link';
 export default function PaymentSuccessPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [countdown, setCountdown] = useState(10);
   const furnitureId = searchParams.get('furniture_id');
   const paymentIntent = searchParams.get('payment_intent');
 
   useEffect(() => {
-    if (!paymentIntent) {
-      setStatus('error');
-      return;
-    }
-    setStatus('success');
-  }, [paymentIntent]);
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          router.push('/catalog');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
-  useEffect(() => {
-    if (status === 'success') {
-      const timer = setInterval(() => {
-        setCountdown((prev) => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            router.push('/catalog');
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
+    return () => clearInterval(timer);
+  }, [router]);
 
-      return () => clearInterval(timer);
-    }
-  }, [status, router]);
-
-  if (status === 'loading') {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Vérification du paiement...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (status === 'error') {
+  if (!paymentIntent) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8 text-center">
@@ -81,7 +59,7 @@ export default function PaymentSuccessPage() {
         
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Paiement réussi !</h1>
         <p className="text-gray-600 mb-4">
-          Votre achat a été confirmé. Vous recevrez un email de confirmation prochainement.
+          Votre achat a été confirmé. Le meuble a été marqué comme vendu et retiré de votre panier.
         </p>
         <p className="text-sm text-gray-500 mb-6">
           Redirection automatique dans {countdown} seconde{countdown > 1 ? 's' : ''}...
@@ -102,6 +80,12 @@ export default function PaymentSuccessPage() {
           >
             Retourner maintenant au catalogue
           </Link>
+        </div>
+
+        <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+          <p className="text-xs text-gray-600">
+            💡 Le traitement du paiement est en cours. Le meuble apparaîtra comme vendu dans quelques instants.
+          </p>
         </div>
       </div>
     </div>
