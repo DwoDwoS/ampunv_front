@@ -97,6 +97,7 @@ export default function PublicNavbar() {
           </div>
 
           <div className="md:hidden flex items-center">
+            <CartButton />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-700 hover:text-blue-600"
