@@ -44,6 +44,8 @@ export default function EditFurniturePage() {
       setReferenceData({ ...baseData, cities });
 
       const furnitureData = await furnitureApi.getById(furnitureId);
+      console.log("FURNITURE DATA:", furnitureData);
+
       setFurniture(furnitureData);
 
       setFormData({
@@ -117,7 +119,6 @@ export default function EditFurniturePage() {
       alert('Meuble modifié avec succès ! Il sera soumis à nouveau pour validation.');
       router.push('/dashboard');
     } catch (error: any) {
-      console.error('Erreur lors de la modification:', error);
       alert(error.response?.data?.message || 'Erreur lors de la modification du meuble');
     } finally {
       setSubmitting(false);

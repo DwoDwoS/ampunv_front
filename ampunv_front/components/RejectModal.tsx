@@ -5,6 +5,7 @@ import { useState } from 'react';
 interface RejectModalProps {
   isOpen: boolean;
   furnitureTitle: string;
+  reason?: string;
   onClose: () => void;
   onConfirm: (reason: string) => void;
 }
@@ -12,10 +13,11 @@ interface RejectModalProps {
 export default function RejectModal({
   isOpen,
   furnitureTitle,
+  reason: initialReason = '',
   onClose,
   onConfirm,
 }: RejectModalProps) {
-  const [reason, setReason] = useState('');
+  const [reason, setReason] = useState(initialReason);
   const [customReason, setCustomReason] = useState('');
 
   const predefinedReasons = [
