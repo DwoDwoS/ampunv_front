@@ -260,6 +260,7 @@ export default function SellerDashboard() {
                             <button
                               onClick={() => setSelectedRejection(furniture)}
                               className="text-blue-600 hover:text-blue-800 font-medium"
+                              aria-label={`Voir le motif de rejet pour ${furniture.title}`}
                             >
                               Voir le motif
                             </button>
@@ -307,6 +308,7 @@ export default function SellerDashboard() {
                       <button
                         onClick={() => setSelectedRejection(furniture)}
                         className="mt-3 w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium"
+                        aria-label={`Voir le motif de rejet pour ${furniture.title}`}
                       >
                         Voir le motif et modifier
                       </button>
@@ -371,12 +373,14 @@ export default function SellerDashboard() {
               <button
                 onClick={() => handleEditRejectedFurniture(selectedRejection.id)}
                 className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium"
+                aria-label={`Modifier l'annonce ${selectedRejection.title}`}
               >
                 Modifier l'annonce
               </button>
               <button
                 onClick={() => setSelectedRejection(null)}
                 className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 font-medium"
+                aria-label="Fermer le motif de rejet"
               >
                 Fermer
               </button>

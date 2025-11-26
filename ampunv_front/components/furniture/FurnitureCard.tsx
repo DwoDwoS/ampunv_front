@@ -124,6 +124,7 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
             <button
               onClick={handleAddToCart}
               className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors text-sm font-semibold flex items-center justify-center gap-2"
+              aria-label="Ajouter le meuble au panier"
             >
               <svg
                 className="w-4 h-4"
@@ -144,6 +145,7 @@ export default function FurnitureCard({ furniture }: FurnitureCardProps) {
             <button
               onClick={handleGoToCart}
               className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors text-sm font-semibold flex items-center justify-center gap-2"
+              aria-label="Aller au panier"
             >
               <svg
                 className="w-4 h-4"

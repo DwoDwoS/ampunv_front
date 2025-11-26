@@ -64,6 +64,7 @@ export default function AdminDashboard() {
           <button
             onClick={() => router.push('/login')}
             className="mt-4 text-sm text-red-600 hover:text-red-800 underline"
+            aria-label="Retour à la page de connexion"
           >
             Retour à la connexion
           </button>
@@ -185,6 +186,7 @@ export default function AdminDashboard() {
               router.push('/login');
             }}
             className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+            aria-label="Se déconnecter de l'administration"
           >
             Se déconnecter
           </button>

@@ -136,6 +136,7 @@ export default function FurnitureDetailPage() {
           <button
             onClick={() => router.push("/catalog")}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            aria-label="Retour au catalogue"
           >
             Retour au catalogue
           </button>
@@ -163,6 +164,7 @@ export default function FurnitureDetailPage() {
                         <button
                           key={img.id}
                           onClick={() => setCurrentImageIndex(index)}
+                          aria-label={`Afficher l'image ${index + 1}`}
                           className={`shrink-0 w-20 h-20 rounded border-2 overflow-hidden ${
                             index === currentImageIndex
                               ? "border-blue-600"
@@ -261,6 +263,7 @@ export default function FurnitureDetailPage() {
                     <button
                       onClick={handleAddToCart}
                       className="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors font-semibold flex items-center justify-center gap-2"
+                      aria-label="Ajouter ce meuble au panier"
                     >
                       <svg
                         className="w-5 h-5"
@@ -281,6 +284,7 @@ export default function FurnitureDetailPage() {
                     <button
                       onClick={() => router.push("/cart")}
                       className="w-full bg-gray-600 text-white py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors font-semibold flex items-center justify-center gap-2"
+                      aria-label="Aller au panier"
                     >
                       <svg
                         className="w-5 h-5"
@@ -302,6 +306,7 @@ export default function FurnitureDetailPage() {
                   <button
                     onClick={handleBuyNow}
                     className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                    aria-label="Acheter ce meuble maintenant"
                   >
                     Acheter maintenant
                   </button>
