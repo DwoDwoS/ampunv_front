@@ -139,7 +139,8 @@ export default function CartPage() {
               </p>
               <button
                 onClick={() => router.push("/catalog")}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors" 
+                aria-label='Parcourir le catalogue'
               >
                 Parcourir le catalogue
               </button>
@@ -217,7 +218,8 @@ export default function CartPage() {
                   </p>
                   <button
                     onClick={() => handleRemove(item.furniture.id)}
-                    className="text-red-600 hover:text-red-700 flex items-center gap-1 text-sm"
+                    className="text-red-600 hover:text-red-700 flex items-center gap-1 text-sm" 
+                    aria-label='Retirer cet article du panier'
                   >
                     <svg
                       className="w-4 h-4"
@@ -262,6 +264,7 @@ export default function CartPage() {
                 onClick={handleCheckout}
                 disabled={processingPayment}
                 className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-semibold text-lg mt-6"
+                aria-label='Procéder au paiement'
               >
                 {processingPayment ? (
                   <span className="flex items-center justify-center gap-2">
@@ -291,6 +294,7 @@ export default function CartPage() {
               <button
                 onClick={() => router.push("/catalog")}
                 className="w-full bg-gray-200 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors"
+                aria-label='Continuer mes achats'
               >
                 Continuer mes achats
               </button>

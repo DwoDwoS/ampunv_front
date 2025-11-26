@@ -60,6 +60,7 @@ export default function AdminNavbar() {
             <button
               onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-medium transition"
+              aria-label="Se déconnecter de l'administration"
             >
               Déconnexion
             </button>

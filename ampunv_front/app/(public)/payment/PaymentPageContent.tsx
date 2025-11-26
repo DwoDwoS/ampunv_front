@@ -53,6 +53,7 @@ function CheckoutForm({ furnitureId }: { furnitureId: number }) {
         type="submit"
         disabled={isLoading || !stripe || !elements}
         className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+        aria-label="Payer maintenant"
       >
         {isLoading ? "Traitement en cours..." : "Payer maintenant"}
       </button>

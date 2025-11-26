@@ -144,6 +144,7 @@ export default function CatalogPage() {
                   <button
                     onClick={resetFilters}
                     className="text-sm text-blue-600 hover:text-blue-800"
+                    aria-label="Réinitialiser les filtres"
                   >
                     Réinitialiser
                   </button>

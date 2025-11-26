@@ -105,7 +105,8 @@ export default function MyFurnituresPage() {
               <p className="mt-2 text-gray-500">
                 Vous n'avez pas encore ajouté de meubles.
               </p>
-              <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                aria-label="Ajouter un meuble">
                 Ajouter un meuble
               </button>
             </div>
@@ -198,6 +199,7 @@ export default function MyFurnituresPage() {
                           <EditFurniturePage />
                         }
                         className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                        aria-label={`Modifier le meuble ${furniture.title}`}
                       >
                         Modifier
                       </button>

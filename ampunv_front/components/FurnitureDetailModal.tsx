@@ -87,6 +87,7 @@ export default function FurnitureDetailModal({
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
+            aria-label="Fermer le modal des détails du meuble"
           >
             ✕
           </button>
@@ -120,6 +121,7 @@ export default function FurnitureDetailModal({
                         <button
                           onClick={prevImage}
                           className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-40 text-white p-2 rounded-full"
+                          aria-label="Image précédente"
                         >
                           ←
                         </button>
@@ -127,6 +129,7 @@ export default function FurnitureDetailModal({
                         <button
                           onClick={nextImage}
                           className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-40 text-white p-2 rounded-full"
+                          aria-label="Image suivante"
                         >
                           →
                         </button>
@@ -150,6 +153,7 @@ export default function FurnitureDetailModal({
                     <button
                       key={image.id}
                       onClick={() => setCurrentImageIndex(index)}
+                      aria-label={`Afficher l'image ${index + 1} sur ${images.length}`}
                       className={`relative aspect-square rounded-lg overflow-hidden border-2 ${
                         index === currentImageIndex
                           ? 'border-blue-600'
@@ -249,6 +253,7 @@ export default function FurnitureDetailModal({
           <button
             onClick={onClose}
             className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+            aria-label="Fermer le modal des détails du meuble"
           >
             Fermer
           </button>
@@ -261,6 +266,7 @@ export default function FurnitureDetailModal({
                   onClose();
                 }}
                 className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                aria-label="Rejeter le meuble"
               >
                 Rejeter
               </button>
@@ -271,6 +277,7 @@ export default function FurnitureDetailModal({
                   onClose();
                 }}
                 className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                aria-label="Approuver le meuble"
               >
                 Approuver
               </button>
