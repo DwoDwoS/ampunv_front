@@ -46,7 +46,6 @@ export default function CreateFurniturePage() {
         setColors(referenceData.colors);
         setCities(citiesData);
       } catch (error) {
-        console.error('Erreur lors du chargement des données:', error);
         alert('Impossible de charger les données de référence');
       } finally {
         setLoadingData(false);
@@ -146,7 +145,6 @@ export default function CreateFurniturePage() {
         condition: formData.condition,
       };
 
-      console.log('Création du meuble...', furnitureData);
       let createdFurniture;
       let furnitureId;
       

@@ -7,6 +7,7 @@ export interface User {
   role: 'SELLER' | 'ADMIN';
   createdAt: string;
   updatedAt: string;
+  isOriginalAdmin?: boolean;
 }
 
 export interface LoginRequest {
@@ -53,10 +54,12 @@ export interface Furniture {
   cityId: number;
   cityName?: string;
   condition: string;
-  status: 'APPROVED' | 'PENDING' | 'SOLD';
+  status: 'APPROVED' | 'PENDING' | 'SOLD' | 'REJECTED';
+  rejectionReason?: string;
   sellerId: number;
   sellerName?: string;
-  images?: ImageDTO[];  
+  images?: ImageDTO[];
+  primaryImageUrl: string;  
   createdAt: string;
   updatedAt: string;
 }
@@ -139,4 +142,5 @@ export interface ReferenceData {
   furnitureTypes: FurnitureType[];
   materials: Material[];
   colors: Color[];
+  cities: City[];
 }

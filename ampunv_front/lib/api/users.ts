@@ -29,4 +29,22 @@ export const userApi = {
   demoteToSeller: async (userId: number): Promise<void> => {
     await apiClient.post(`/api/admin/users/${userId}/demote`);
   },
+
+  updateMyProfile: async (data: { firstname: string; lastname: string; email: string; cityId: number }): Promise<User> => {
+    const response = await apiClient.put<User>('/api/users/myprofile', data);
+    return response.data;
+  },
+
+  updatePassword: async (data: { currentPassword: string; newPassword: string }): Promise<void> => {
+    await apiClient.put('/api/users/myprofile/password', data);
+  },
+
+  deleteMyAccount: async (): Promise<void> => {
+    await apiClient.delete('/api/users/myprofile');
+  },
+
+  deleteUser: async (userId: number) => {
+    const response = await apiClient.delete(`/api/users/${userId}`);
+    return response.data;
+  },
 };
