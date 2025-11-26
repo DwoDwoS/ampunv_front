@@ -461,6 +461,7 @@ export default function CreateFurniturePage() {
                   type="submit"
                   disabled={loading}
                   className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Publier l'annonce"
                 >
                   {loading ? 'Publication en cours...' : 'Publier l\'annonce'}
                 </button>
