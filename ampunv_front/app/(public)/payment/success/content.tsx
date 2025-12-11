@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { cartManager } from '@/lib/cart';
 
 export default function PaymentSuccessContent() {
   const searchParams = useSearchParams();
@@ -12,6 +13,10 @@ export default function PaymentSuccessContent() {
   const paymentIntent = searchParams.get('payment_intent');
 
   useEffect(() => {
+    if (paymentIntent && furnitureId) {
+      cartManager.removeFromCart(Number(furnitureId));
+    }
+
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
@@ -24,7 +29,7 @@ export default function PaymentSuccessContent() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [router]);
+  }, [router, paymentIntent, furnitureId]);
 
   if (!paymentIntent) {
     return (
