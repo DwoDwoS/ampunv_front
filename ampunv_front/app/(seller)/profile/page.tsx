@@ -189,6 +189,7 @@ export default function ProfilePage() {
               <button
                 onClick={() => window.location.reload()}
                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                aria-label="Réessayer le chargement du profil"
               >
                 Réessayer
               </button>
@@ -216,6 +217,7 @@ export default function ProfilePage() {
               <nav className="flex -mb-px">
                 <button
                   onClick={() => setActiveTab('profile')}
+                  aria-label="Afficher les informations personnelles"
                   className={`py-4 px-6 text-sm font-medium border-b-2 ${
                     activeTab === 'profile'
                       ? 'border-blue-600 text-blue-600'
@@ -226,6 +228,7 @@ export default function ProfilePage() {
                 </button>
                 <button
                   onClick={() => setActiveTab('password')}
+                  aria-label="Afficher le formulaire de changement de mot de passe"
                   className={`py-4 px-6 text-sm font-medium border-b-2 ${
                     activeTab === 'password'
                       ? 'border-blue-600 text-blue-600'
@@ -236,6 +239,7 @@ export default function ProfilePage() {
                 </button>
                 <button
                   onClick={() => setActiveTab('danger')}
+                  aria-label="Afficher les options de suppression de compte"
                   className={`py-4 px-6 text-sm font-medium border-b-2 ${
                     activeTab === 'danger'
                       ? 'border-red-600 text-red-600'
@@ -315,6 +319,7 @@ export default function ProfilePage() {
                       type="submit"
                       disabled={profileSaving}
                       className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                      aria-label="Enregistrer les modifications du profil"
                     >
                       {profileSaving ? 'Enregistrement...' : 'Enregistrer les modifications'}
                     </button>
@@ -373,6 +378,7 @@ export default function ProfilePage() {
                       type="submit"
                       disabled={passwordSaving}
                       className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                      aria-label="Changer le mot de passe"
                     >
                       {passwordSaving ? 'Mise à jour...' : 'Changer le mot de passe'}
                     </button>
@@ -407,6 +413,7 @@ export default function ProfilePage() {
                       onClick={handleDeleteAccount}
                       disabled={deleting || deleteConfirmation !== 'SUPPRIMER'}
                       className="px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                      aria-label="Supprimer définitivement mon compte"
                     >
                       {deleting ? 'Suppression...' : 'Supprimer définitivement mon compte'}
                     </button>

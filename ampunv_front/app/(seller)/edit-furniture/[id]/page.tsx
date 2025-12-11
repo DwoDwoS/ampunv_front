@@ -44,7 +44,6 @@ export default function EditFurniturePage() {
       setReferenceData({ ...baseData, cities });
 
       const furnitureData = await furnitureApi.getById(furnitureId);
-      console.log("FURNITURE DATA:", furnitureData);
 
       setFurniture(furnitureData);
 
@@ -331,6 +330,7 @@ export default function EditFurniturePage() {
                           type="button"
                           onClick={() => handleRemoveExistingImage(imageUrl)}
                           className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                          aria-label={`Supprimer l'image ${index + 1}`}
                         >
                           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -359,6 +359,7 @@ export default function EditFurniturePage() {
                           type="button"
                           onClick={() => handleRemoveNewImage(index)}
                           className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                          aria-label={`Supprimer la nouvelle image ${index + 1}`}
                         >
                           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -399,12 +400,14 @@ export default function EditFurniturePage() {
                 onClick={handleSubmit}
                 disabled={submitting}
                 className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed font-medium"
+                aria-label="Enregistrer les modifications de l'annonce"
               >
                 {submitting ? 'Modification en cours...' : 'Enregistrer les modifications'}
               </button>
               <button
                 onClick={() => router.push('/dashboard')}
                 className="px-6 py-3 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 font-medium"
+                aria-label="Annuler la modification de l'annonce"
               >
                 Annuler
               </button>

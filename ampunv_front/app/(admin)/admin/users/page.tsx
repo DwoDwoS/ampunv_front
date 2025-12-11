@@ -139,6 +139,7 @@ export default function UsersManagement() {
                   <button
                     onClick={() => handlePromote(user.id)}
                     className="w-full text-green-600 hover:text-green-900 text-sm flex items-center gap-1.5"
+                    aria-label={`Promouvoir l'utilisateur ${user.firstname} ${user.lastname} en administrateur`}
                   >
                     Promouvoir
                   </button>
@@ -146,6 +147,7 @@ export default function UsersManagement() {
                   <button
                     onClick={() => handleDemote(user.id)}
                     className="w-full text-orange-600 hover:text-orange-900 text-sm flex items-center gap-1.5"
+                    aria-label={`Rétrograder l'administrateur ${user.firstname} ${user.lastname} en vendeur`}
                   >
                     Rétrograder
                   </button>
@@ -157,6 +159,7 @@ export default function UsersManagement() {
                     handleDelete(user.id, `${user.firstname} ${user.lastname}`)
                   }
                   className="w-full text-red-600 hover:text-red-900 text-sm flex items-center gap-1.5"
+                  aria-label={`Supprimer l'utilisateur ${user.firstname} ${user.lastname}`}
                 >
                   Supprimer
                 </button>

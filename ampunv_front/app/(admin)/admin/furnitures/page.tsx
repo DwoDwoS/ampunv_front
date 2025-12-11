@@ -179,6 +179,7 @@ export default function AdminFurnituresPage() {
             <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-4">
               <button
                 onClick={() => setFilter("ALL")}
+                aria-label="Afficher tous les meubles"
                 className={`px-3 sm:px-4 py-2 rounded-md font-medium text-xs sm:text-sm ${
                   filter === "ALL"
                     ? "bg-blue-600 text-white"
@@ -189,6 +190,7 @@ export default function AdminFurnituresPage() {
               </button>
               <button
                 onClick={() => setFilter("PENDING")}
+                aria-label="Afficher les meubles en attente"
                 className={`px-3 sm:px-4 py-2 rounded-md font-medium text-xs sm:text-sm ${
                   filter === "PENDING"
                     ? "bg-yellow-600 text-white"
@@ -200,6 +202,7 @@ export default function AdminFurnituresPage() {
               </button>
               <button
                 onClick={() => setFilter("APPROVED")}
+                aria-label="Afficher les meubles disponibles"
                 className={`px-3 sm:px-4 py-2 rounded-md font-medium text-xs sm:text-sm ${
                   filter === "APPROVED"
                     ? "bg-green-600 text-white"
@@ -211,6 +214,7 @@ export default function AdminFurnituresPage() {
               </button>
               <button
                 onClick={() => setFilter("SOLD")}
+                aria-label="Afficher les meubles vendus"
                 className={`px-3 sm:px-4 py-2 rounded-md font-medium text-xs sm:text-sm ${
                   filter === "SOLD"
                     ? "bg-red-600 text-white"
@@ -321,6 +325,7 @@ export default function AdminFurnituresPage() {
                                 onClick={() => handleViewDetails(furniture)}
                                 className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700 text-xs"
                                 title="Voir les détails"
+                                aria-label={`Voir les détails du meuble ${furniture.title}`}
                               >
                                 👁 Détails
                               </button>
@@ -331,6 +336,7 @@ export default function AdminFurnituresPage() {
                                   }
                                   className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-xs"
                                   title="Approuver"
+                                  aria-label={`Approuver le meuble ${furniture.title}`}
                                 >
                                   ✓ Approuver
                                 </button>
@@ -342,6 +348,7 @@ export default function AdminFurnituresPage() {
                                   }
                                   className="px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 text-xs"
                                   title="Mettre en attente"
+                                  aria-label={`Mettre en attente le meuble ${furniture.title}`}
                                 >
                                   ⏸ En attente
                                 </button>
@@ -350,6 +357,7 @@ export default function AdminFurnituresPage() {
                                 onClick={() => handleDelete(furniture.id)}
                                 className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-xs"
                                 title="Supprimer"
+                                aria-label={`Supprimer le meuble ${furniture.title}`}
                               >
                                 🗑
                               </button>
